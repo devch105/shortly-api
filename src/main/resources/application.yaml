@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: shortly
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/shortlydb
+    username: shorty
+    password: Shorty@123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        # Optional with Hibernate 6
+        dialect: org.hibernate.dialect.MySQLDialect
+
+jwt:
+  secret: ${JWT_SECRET}
+  expiration: ${JWT_EXPIRY}
+  refresh_expiration: ${JWT_REFERESH_EXPIRY}
+
+
+server:
+  address: 0.0.0.0
+  #  port: 8080
+  servlet:
+    context-path: /api/v1.0
+  port: 8080
