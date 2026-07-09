@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,14 +15,20 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
-public class UrlMapping {
+@Table(name = "urls")
+public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false , length = 2048)
     private String originalUrl;
+    @Column( unique = true)
     private String shortUrl;
-    private int clickCount = 0;
+    @Builder.Default
+    private Long clickCount = 0L;
+    @CreationTimestamp
     private LocalDateTime createdDate;
+    private LocalDateTime expiryDate;
 
 
     @ManyToOne

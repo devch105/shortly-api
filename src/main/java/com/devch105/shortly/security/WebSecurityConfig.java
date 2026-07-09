@@ -1,5 +1,6 @@
 package com.devch105.shortly.security;
 
+import com.devch105.shortly.dto.AuthDTO;
 import com.devch105.shortly.service.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -50,7 +51,12 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    DaoAuthenticationProvider authenticationProvider() {
+    public AuthenticationManager authenticationManager() {
+        return new ProviderManager(authenticationProvider());
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider() {
 
         DaoAuthenticationProvider provider =
                 new DaoAuthenticationProvider();

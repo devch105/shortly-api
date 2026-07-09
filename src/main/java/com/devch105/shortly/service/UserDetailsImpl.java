@@ -39,17 +39,14 @@ public class UserDetailsImpl implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
-
     @Override
     public String getPassword() {
         return password;
     }
-
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
-
     public static  UserDetailsImpl build(UserEntity user) {
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
         return new UserDetailsImpl(

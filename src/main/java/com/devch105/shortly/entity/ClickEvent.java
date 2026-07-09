@@ -21,5 +21,5 @@ public class ClickEvent {
     private LocalDateTime clickTime;
     @ManyToOne
     @JoinColumn(name = "url_mapping_id")
-    private UrlMapping urlMapping;
+    private UrlEntity urlMapping;
 }
