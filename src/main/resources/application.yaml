@@ -5,21 +5,18 @@ spring:
 #|| jdbc:mysql://localhost:3306/shortlydb
 #  shorty
 #  Shorty@123
+
   datasource:
-    url: ${POSTGRES_URL}
-    username:  ${POSTGRES_USERNAME}
-    password:  ${POSTGRES_PASSWORD}
+      url: ${POSTGRES_URL}
+      username: ${POSTGRES_USERNAME}
+      password: ${POSTGRES_PASSWORD}
 
   jpa:
     hibernate:
       ddl-auto: update
-
     show-sql: true
-
     properties:
-      hibernate:
-        # Optional with Hibernate 6
-        dialect: org.hibernate.dialect.MySQLDialect
+      hibernate: { }
 
 jwt:
   secret: ${JWT_SECRET}

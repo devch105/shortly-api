@@ -20,7 +20,7 @@ public class UrlEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false , length = 2048)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String originalUrl;
     @Column( unique = true)
     private String shortUrl;
