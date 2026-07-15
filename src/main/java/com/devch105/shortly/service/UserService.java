@@ -80,7 +80,7 @@ public class UserService {
         return UserDTO.builder()
                 .id(userEntity.getId())
                 .email(userEntity.getEmail())
-                .username(userEntity.getUsername())
+                .fullName(userEntity.getFullName())
                 .role(userEntity.getRole())
                 .build();
     }
@@ -90,7 +90,7 @@ public class UserService {
         return UserEntity.builder()
 //                .id(userDTO.getId())
                 .email(userDTO.getEmail())
-                .username(userDTO.getUsername())
+                .fullName(userDTO.getFullName())
                 .role(UserEntity.Role.ROLE_USER)
                 .build();
     }
@@ -99,7 +99,7 @@ public class UserService {
     public UserEntity toRegisterEntity(RegisterDTO registerDTO){
         return UserEntity.builder()
                 .email(registerDTO.getEmail())
-                .username(registerDTO.getUsername())
+                .fullName(registerDTO.getFullName())
                 .password(passwordEncoder.encode(registerDTO.getPassword()))
                 .role(UserEntity.Role.ROLE_USER)
                 .build();

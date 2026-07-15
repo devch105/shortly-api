@@ -12,7 +12,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Builder
 public class RegisterDTO {
-    private String username;
+    private String fullName;
     private String password;
     private String email;
 }

@@ -47,11 +47,12 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return email;
     }
+
     public static  UserDetailsImpl build(UserEntity user) {
         GrantedAuthority authority = new SimpleGrantedAuthority(user.getRole().name());
         return new UserDetailsImpl(
                 user.getId(),
-                user.getUsername(),
+                user.getFullName(),
                 user.getEmail(),
                 user.getPassword(),
                 Collections.singletonList(authority)

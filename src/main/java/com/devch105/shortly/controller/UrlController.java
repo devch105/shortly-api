@@ -1,6 +1,7 @@
 package com.devch105.shortly.controller;
 
 import com.devch105.shortly.dto.ClickEventDTO;
+import com.devch105.shortly.dto.ShortenUrlListDTO;
 import com.devch105.shortly.dto.UrlDTO;
 import com.devch105.shortly.dto.UserDTO;
 import com.devch105.shortly.entity.UserEntity;
@@ -18,6 +19,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -58,19 +60,23 @@ public class UrlController {
     }
 
 
-    @GetMapping
-    public  ResponseEntity<List<UrlDTO>> getUserUrls(Principal principal) {
-       try{
-           UserDTO user = userService.getPublicProfile(principal.getName());
-           List<UrlDTO> currentUserUrls = urlService.geUrlsOfCurrentUser(user);
-           return ResponseEntity.ok(currentUserUrls);
-       }catch (Exception e){
-           throw new RuntimeException("Error getting urls for current user : " + principal.getName(), e);
-       }
+
+
+    @GetMapping("/list")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<List<ShortenUrlListDTO>>  getShortenUrlsList(Principal principal){
+        try {
+            UserDTO user = userService.getPublicProfile(principal.getName());
+            List<ShortenUrlListDTO> shortenUrlsList = urlService.getShortenUrlsOfCurrentUser(user);
+            return ResponseEntity.ok(shortenUrlsList);
+        }catch (Exception e){
+            log.error("Error in Url shorten List method in  controller : ",e);
+            throw new RuntimeException("Error getting urls for current user : " + principal.getName(), e);
+        }
     }
 
-
     @GetMapping("/analytics/{shortcode}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<List<ClickEventDTO>> getUrlAnalytics(Principal principal,
                                                                @PathVariable String shortcode,
                                                                @RequestParam("startDate") String startDate,
@@ -85,4 +91,22 @@ public class UrlController {
        List<ClickEventDTO> clickEventDTOS  = urlService.getClickEventsByDate(shortcode,startDateTime,endDateTime);
        return  ResponseEntity.ok(clickEventDTOS);
     }
+
+    @GetMapping("/totalclicks")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity< Map<LocalDate, Long>> getTotalCliksByDate(Principal principal,    @RequestParam("startDate") LocalDate startDate,
+                                                                      @RequestParam("endDate") LocalDate endDate  ) {
+        UserDTO user = userService.getPublicProfile(principal.getName());
+
+        Map<LocalDate, Long> totalsClicksByUserBetweenDate = urlService.getTotalsClicksByUserAndDate(user,  startDate, endDate);
+        return  ResponseEntity.ok(totalsClicksByUserBetweenDate);
+    }
+
+    @DeleteMapping("/delete/{shortCode}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?>deleteUrl(@PathVariable String shortCode){
+        String message = urlService.deleteURL(shortCode);
+        return ResponseEntity.ok(message);
+    }
+
 }

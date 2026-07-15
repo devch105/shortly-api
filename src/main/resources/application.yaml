@@ -2,10 +2,13 @@ spring:
   application:
     name: shortly
 
+#|| jdbc:mysql://localhost:3306/shortlydb
+#  shorty
+#  Shorty@123
   datasource:
-    url: jdbc:mysql://localhost:3306/shortlydb
-    username: shorty
-    password: Shorty@123
+    url: ${POSTGRES_URL}
+    username:  ${POSTGRES_USERNAME}
+    password:  ${POSTGRES_PASSWORD}
 
   jpa:
     hibernate:
@@ -37,3 +40,7 @@ logging:
   level:
     org.springframework.security: DEBUG
 
+app:
+ backend:
+   base:
+    url: ${BACKEND_URL}
