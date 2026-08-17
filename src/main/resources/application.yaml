@@ -6,6 +6,11 @@ spring:
 #  shorty
 #  Shorty@123
 
+  data:
+    redis:
+      url: ${REDIS_URL_INTERNAL}
+
+
   datasource:
       url: ${POSTGRES_URL}
       username: ${POSTGRES_USERNAME}
