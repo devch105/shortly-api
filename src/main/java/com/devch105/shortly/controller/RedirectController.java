@@ -19,12 +19,12 @@ public class RedirectController {
 
     @GetMapping("/{url}")
     public ResponseEntity<Void> redirectTo(@PathVariable String url) {
-        UrlDTO originalUrl = urlService.getOriginalUrl(url);
+        String originalUrl = urlService.getOriginalUrl(url);
         if (originalUrl == null) {
             return ResponseEntity.notFound().build();
         }
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.LOCATION,originalUrl.getOriginalUrl());
+        headers.add(HttpHeaders.LOCATION,originalUrl);
         return ResponseEntity.status(HttpStatus.FOUND).headers(headers).build();
     }
 }
